@@ -1,11 +1,8 @@
-from typing import Optional
-import requests
+import httpx
 import logging
+from typing import Optional
 
-from .types import (
-    GenerateAudioRequest,
-    HealthCheckResponse,
-)
+from .types import HealthCheckResponse, GenerateAudioRequest
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -16,20 +13,25 @@ class XTTSRVCClient:
         self.host = host
         self.port = port
 
-    def health_check(self) -> bool:
+    async def health_check(self) -> bool:
+        """
+        Asynchronously checks the health status of the server.
+
+        Returns:
+            bool: True if the server is ready, False otherwise.
+        """
         try:
-            res = requests.get(f"http://{self.host}:{self.port}/health")
-            res_json = HealthCheckResponse(**res.json())
-            if res_json.status != "ready":
-                return False
-            return True
+            async with httpx.AsyncClient() as client:
+                res = await client.get(f"http://{self.host}:{self.port}/health")
+                res_json = HealthCheckResponse(**res.json())
+                return res_json.status == "ready"
         except Exception as e:
-            _LOGGER.error(e)
+            _LOGGER.error(f"Health check failed: {e}")
             return False
 
-    def generate_audio(self, request_data: GenerateAudioRequest) -> Optional[bytes]:
+    async def generate_audio(self, request_data: GenerateAudioRequest) -> Optional[bytes]:
         """
-        Sends a text message to the server to generate audio and returns the audio bytes.
+        Sends a text message to the server to generate audio asynchronously and returns the audio bytes.
 
         Args:
             request_data (GenerateAudioRequest): The request data containing the message to generate audio for.
@@ -39,18 +41,18 @@ class XTTSRVCClient:
         """
         try:
             url = f"http://{self.host}:{self.port}/generate"
-            payload = request_data.dict()
+            payload = request_data.dict()  # Replace with .dict() if using Pydantic v1.x
             headers = {"Content-Type": "application/json"}
 
-            res = requests.post(url, json=payload, headers=headers)
+            async with httpx.AsyncClient() as client:
+                res = await client.post(url, json=payload, headers=headers)
 
-            if res.status_code == 200:
-                return res.content
-            else:
-                _LOGGER.error(
-                    f"Audio generation failed: {res.status_code} - {res.text}"
-                )
-                return None
+                if res.status_code == 200:
+                    _LOGGER.info("Audio generation successful.")
+                    return res.content  # Return the audio bytes
+                else:
+                    _LOGGER.error(f"Audio generation failed: {res.status_code} - {res.text}")
+                    return None
         except Exception as e:
             _LOGGER.error(f"Error during audio generation: {e}")
             return None

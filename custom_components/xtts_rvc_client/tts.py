@@ -76,7 +76,7 @@ class XTTSRVC(TextToSpeechEntity):
     async def async_update(self):
         """Periodically update the status of the TTS service."""
         try:
-            if self.client.health_check():
+            if await self.client.health_check():
                 self._status = STATE_OK
                 return
             self._status = STATE_UNAVAILABLE
@@ -89,5 +89,5 @@ class XTTSRVC(TextToSpeechEntity):
         """Load tts audio file from the engine."""
 
         request_data = GenerateAudioRequest(message=message)
-        wav_data = self.client.generate_audio(request_data)
+        wav_data = await self.client.generate_audio(request_data)
         return ("wav", wav_data)
