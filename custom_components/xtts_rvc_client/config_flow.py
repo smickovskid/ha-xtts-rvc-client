@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-from custom_components.xtts_rvc_client.client import XTTSRVCClient
+from xtts_rvc_client.client import XTTSRVCClient
 import voluptuous as vol
 
 from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
@@ -13,7 +13,6 @@ from homeassistant.const import CONF_HOST, CONF_PORT
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
 
-from .connection import ConnectionClient
 from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)

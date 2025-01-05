@@ -2,7 +2,7 @@ from typing import Optional
 import requests
 import logging
 
-from custom_components.xtts_rvc_client.types import (
+from xtts_rvc_client.types import (
     GenerateAudioRequest,
     HealthCheckResponse,
 )

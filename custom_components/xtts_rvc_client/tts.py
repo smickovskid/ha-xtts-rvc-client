@@ -3,8 +3,8 @@
 import logging
 from typing import Any
 
-from custom_components.xtts_rvc_client.client import XTTSRVCClient
-from custom_components.xtts_rvc_client.types import GenerateAudioRequest
+from xtts_rvc_client.client import XTTSRVCClient
+from xtts_rvc_client.types import GenerateAudioRequest
 from homeassistant.components.tts import TextToSpeechEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
