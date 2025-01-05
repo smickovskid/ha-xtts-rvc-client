@@ -1,0 +1,9 @@
+{
+	"name": "XTTS + RVC client",
+	"domains": [
+		"xtts_rvc_client"
+	],
+	"render_readme": true,
+	"country": "CN",
+	"homeassistant": "2022.12.0"
+}
