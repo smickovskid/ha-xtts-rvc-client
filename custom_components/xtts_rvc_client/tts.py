@@ -1,8 +1,7 @@
 """Integration support for the XTTS + RVC platform."""
 
-import asyncio
 import logging
-from typing import Any, Literal
+from typing import Any
 
 from custom_components.xtts_rvc_client.client import XTTSRVCClient
 from custom_components.xtts_rvc_client.types import GenerateAudioRequest
@@ -18,10 +17,7 @@ from homeassistant.const import (
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .audio_processor import AudioProcessor
-from .connection import ConnectionClient
 from .const import DOMAIN
-from .utils import split_text_min_chunks
 
 _LOGGER = logging.getLogger(__name__)
 
