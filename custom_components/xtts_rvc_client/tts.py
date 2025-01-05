@@ -1,10 +1,9 @@
 """Integration support for the XTTS + RVC platform."""
 
-import logging
 from typing import Any
 
-from xtts_rvc_client.client import XTTSRVCClient
-from xtts_rvc_client.types import GenerateAudioRequest
+from .client import XTTSRVCClient
+from .types import GenerateAudioRequest
 from homeassistant.components.tts import TextToSpeechEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
@@ -19,7 +18,6 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DOMAIN
 
-_LOGGER = logging.getLogger(__name__)
 
 SUPPORT_LANGUAGES = ["en"]
 DEFAULT_LANG = "en"

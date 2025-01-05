@@ -2,7 +2,7 @@ from typing import Optional
 import requests
 import logging
 
-from xtts_rvc_client.types import (
+from .types import (
     GenerateAudioRequest,
     HealthCheckResponse,
 )
@@ -39,7 +39,7 @@ class XTTSRVCClient:
         """
         try:
             url = f"http://{self.host}:{self.port}/generate"
-            payload = request_data.model_dump()
+            payload = request_data.dict()
             headers = {"Content-Type": "application/json"}
 
             res = requests.post(url, json=payload, headers=headers)

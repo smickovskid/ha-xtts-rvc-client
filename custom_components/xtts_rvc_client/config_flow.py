@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-from xtts_rvc_client.client import XTTSRVCClient
+from .client import XTTSRVCClient
 import voluptuous as vol
 
 from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
