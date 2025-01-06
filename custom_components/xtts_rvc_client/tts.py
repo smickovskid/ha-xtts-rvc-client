@@ -89,7 +89,7 @@ class XTTSRVC(TextToSpeechEntity):
     ):
         """Load tts audio file from the engine."""
 
-        msg_clean = re.sub(r'[^A-Za-z0-9]', '', message)
+        msg_clean = re.sub(r'[^\w\s\.\?!,]', '', message)
         request_data = GenerateAudioRequest(message=msg_clean)
         wav_data = await self.client.generate_audio(request_data)
         return ("wav", wav_data)
