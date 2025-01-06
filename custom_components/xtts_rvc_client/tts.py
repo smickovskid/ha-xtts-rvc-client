@@ -1,6 +1,7 @@
 """Integration support for the XTTS + RVC platform."""
 
 from typing import Any
+import re
 
 from .client import XTTSRVCClient
 from .types import GenerateAudioRequest
@@ -88,6 +89,7 @@ class XTTSRVC(TextToSpeechEntity):
     ):
         """Load tts audio file from the engine."""
 
-        request_data = GenerateAudioRequest(message=message)
+        msg_clean = re.sub(r'[^A-Za-z0-9]', '', message)
+        request_data = GenerateAudioRequest(message=msg_clean)
         wav_data = await self.client.generate_audio(request_data)
         return ("wav", wav_data)
