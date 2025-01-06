@@ -45,7 +45,7 @@ class XTTSRVCClient:
             headers = {"Content-Type": "application/json"}
 
             async with httpx.AsyncClient() as client:
-                res = await client.post(url, json=payload, headers=headers)
+                res = await client.post(url, json=payload, headers=headers, timeout=59)
 
                 if res.status_code == 200:
                     _LOGGER.info("Audio generation successful.")
